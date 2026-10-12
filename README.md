@@ -88,3 +88,16 @@ Azure Data Factory is not part of this project. The free Azure subscription had 
 ## API failures
  
 `hamta` calls the same URL three times, with five seconds between tries. The third failure aborts the notebook. The message names the API, the URL and the status code. Each bronze task also retries twice, 60 seconds apart, so a failed extract is repeated before silver and gold write.
+
+## Runbook
+ 
+**Run.** Open `laddplatst_pipeline` and choose **Run now**, or wait for the monthly trigger.
+ 
+**Investigate.** Open the red task under **Runs**. A `hamta` error names the API and the status. A `silver_kontroll` error names the broken rule, for example the municipality count or the hour count.
+ 
+**Known cases.** An API error after three tries is intentional. Run the job again later. The check stops the job if Heby `1917` comes back or if the electricity price is not a clean hourly average. The next green run rebuilds silver and gold. Do not run the SQL half of a bronze cell without the line that creates the temporary view.
+ 
+## Limitations
+ 
+New registrations are a flow, not the number of electric cars already on the road. A small municipality can rank high on percentage growth from a handful of cars. The price series is 2025. A few municipalities are split by an area border, and the model assigns one area to the whole municipality. The list is a priority input. Existing chargers and grid capacity are not included.
+
